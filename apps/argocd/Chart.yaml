@@ -1,0 +1,9 @@
+apiVersion: v2
+name: argocd
+description: Argo CD — self-managed via App of Apps
+type: application
+version: 0.1.0
+dependencies:
+  - name: argo-cd
+    version: 9.4.10   # renovate: datasource=helm registryUrl=https://argoproj.github.io/argo-helm
+    repository: https://argoproj.github.io/argo-helm

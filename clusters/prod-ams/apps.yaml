@@ -1,0 +1,41 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: prod-ams-apps
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - app: argocd
+            env: prod
+          - app: kubescape
+            env: prod
+          # Lägg till fler appar här:
+          # - app: min-app
+          #   env: prod
+  template:
+    metadata:
+      name: "{{app}}"
+      namespace: argocd
+      annotations:
+        argocd.argoproj.io/sync-wave: "{{syncWave}}"
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/your-org/apps-repo
+        targetRevision: main
+        path: "apps/{{app}}"
+        helm:
+          valueFiles:
+            - values.yaml
+            - "values-{{env}}.yaml"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{app}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

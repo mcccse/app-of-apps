@@ -1,0 +1,30 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:base"],
+  "helmv3": {
+    "enabled": true
+  },
+  "packageRules": [
+    {
+      "description": "Automerge patch-versioner i dev",
+      "matchManagers": ["helmv3"],
+      "matchUpdateTypes": ["patch"],
+      "matchFileNames": ["apps/**/Chart.yaml"],
+      "automerge": true,
+      "automergeType": "pr"
+    },
+    {
+      "description": "Minor och major kräver manuell merge",
+      "matchManagers": ["helmv3"],
+      "matchUpdateTypes": ["minor", "major"],
+      "matchFileNames": ["apps/**/Chart.yaml"],
+      "automerge": false,
+      "labels": ["dependencies", "helm"]
+    },
+    {
+      "description": "Gruppera alla Helm-uppdateringar i samma PR",
+      "matchManagers": ["helmv3"],
+      "groupName": "helm chart dependencies"
+    }
+  ]
+}

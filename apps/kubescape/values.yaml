@@ -1,0 +1,24 @@
+# Defaultvärden som gäller för alla miljöer.
+# Överskrivs av values-<env>.yaml per kluster.
+kubescape-operator:
+  # clusterName sätts per miljö i values-<env>.yaml
+  clusterName: ""
+
+  capabilities:
+    configurationScan: enable
+    continuousScan: enable
+    vulnerabilityScan: enable
+    nodeScan: enable
+    runtimeObservability: enable
+    networkPolicyService: enable
+    # Inbyggd auto-upgrade från Kubescape — vi använder Renovate istället
+    autoUpgrading: disable
+
+  # Resurser — överskrivs per miljö vid behov
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 500Mi

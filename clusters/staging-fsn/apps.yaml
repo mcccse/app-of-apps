@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: staging-fsn-apps
+  namespace: argocd
+spec:
+  generators:
+    - list:
+        elements:
+          - app: argocd
+            env: staging
+          - app: kubescape
+            env: staging
+  template:
+    metadata:
+      name: "{{app}}"
+      namespace: argocd
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/your-org/apps-repo
+        targetRevision: main
+        path: "apps/{{app}}"
+        helm:
+          valueFiles:
+            - values.yaml
+            - "values-{{env}}.yaml"
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: "{{app}}"
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true

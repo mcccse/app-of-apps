@@ -1,0 +1,11 @@
+# Defaultvärden för Argo CD — gäller alla miljöer.
+# Överskrivs av values-<env>.yaml per kluster.
+argo-cd:
+  server:
+    service:
+      type: ClusterIP   # överskrivs till LoadBalancer i prod om du vill ha extern access
+
+  configs:
+    params:
+      # Kör utan TLS bakom en ingress/load balancer
+      server.insecure: true

@@ -1,0 +1,11 @@
+kubescape-operator:
+  clusterName: prod-ams
+
+  # Prod kör med fulla resurser
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 500Mi

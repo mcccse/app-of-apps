@@ -1,0 +1,9 @@
+apiVersion: v2
+name: kubescape
+description: Kubescape security operator
+type: application
+version: 0.1.0
+dependencies:
+  - name: kubescape-operator
+    version: 1.29.6   # renovate: datasource=helm registryUrl=https://kubescape.github.io/helm-charts/
+    repository: https://kubescape.github.io/helm-charts/
