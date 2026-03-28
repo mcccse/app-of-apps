@@ -59,7 +59,7 @@ Committa och pusha — Argo CD synkar automatiskt.
 
 ## Versionshantering med Renovate
 
-Renovate sканnar `Chart.yaml`-filer och öppnar automatiskt PRs när nya
+Renovate skannar `Chart.yaml`-filer och öppnar automatiskt PRs när nya
 Helm chart-versioner finns tillgängliga. Se `renovate.json` för konfiguration.
 
 Kontrollera alltid att en ny version fungerar i dev/staging innan du mergar till prod.
