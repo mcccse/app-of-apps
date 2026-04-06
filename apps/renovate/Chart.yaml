@@ -1,0 +1,9 @@
+apiVersion: v2
+name: renovate
+description: Renovate — automatiska dependency-uppdateringar
+type: application
+version: 0.1.0
+dependencies:
+  - name: renovate
+    version: "*"   # renovate: datasource=helm registryUrl=https://docs.renovatebot.com/helm-charts
+    repository: https://docs.renovatebot.com/helm-charts

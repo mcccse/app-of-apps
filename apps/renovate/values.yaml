@@ -1,0 +1,15 @@
+renovate:
+  renovate:
+    config: |
+      {
+        "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+        "extends": ["config:base"],
+        "platform": "gitea",
+        "endpoint": "http://gitea-http.gitea.svc.cluster.local:3000",
+        "gitUrl": "endpoint",
+        "repositories": ["admin/app-of-apps"]
+      }
+  existingSecret: renovate-gitea-token
+  cronjob:
+    enabled: true
+    schedule: "0 * * * *"
