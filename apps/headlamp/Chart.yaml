@@ -1,0 +1,9 @@
+apiVersion: v2
+name: headlamp
+description: Headlamp UI
+type: application
+version: 0.1.0
+dependencies:
+  - name: headlamp
+    version: "*"   # renovate: datasource=helm registryUrl=https://kubernetes-sigs.github.io/headlamp/
+    repository: https://kubernetes-sigs.github.io/headlamp/
