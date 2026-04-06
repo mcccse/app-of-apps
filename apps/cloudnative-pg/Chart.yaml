@@ -1,0 +1,9 @@
+apiVersion: v2
+name: cloudnative-pg
+description: CloudNativePG operator (umbrella chart)
+type: application
+version: 0.1.0
+dependencies:
+  - name: cloudnative-pg
+    version: "*"   # renovate: datasource=helm registryUrl=https://cloudnative-pg.github.io/charts/
+    repository: https://cloudnative-pg.github.io/charts/
