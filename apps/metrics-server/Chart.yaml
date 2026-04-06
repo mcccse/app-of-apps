@@ -1,0 +1,9 @@
+apiVersion: v2
+name: metrics-server
+description: Kubernetes Metrics Server (umbrella chart)
+type: application
+version: 0.1.0
+dependencies:
+  - name: metrics-server
+    version: "*"   # renovate: datasource=helm registryUrl=https://kubernetes-sigs.github.io/metrics-server/
+    repository: https://kubernetes-sigs.github.io/metrics-server/
