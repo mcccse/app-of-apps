@@ -1,0 +1,9 @@
+apiVersion: v2
+name: reloader
+description: Stakater Reloader (umbrella chart)
+type: application
+version: 0.1.0
+dependencies:
+  - name: reloader
+    version: "*"   # renovate: datasource=helm registryUrl=https://stakater.github.io/stakater-charts/
+    repository: https://stakater.github.io/stakater-charts/
