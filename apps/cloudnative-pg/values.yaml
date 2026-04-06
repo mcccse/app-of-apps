@@ -1,0 +1,3 @@
+# Default values for CloudNativePG — apply to all environments.
+# Override per cluster in values-<env>.yaml if needed.
+cloudnative-pg: {}
