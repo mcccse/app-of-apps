@@ -7,7 +7,11 @@ spec:
   generators:
     - list:
         elements:
-          - app: argocd
+          - app: headlamp
+            env: staging
+          - app: metrics-server
+            env: staging
+          - app: reloader
             env: staging
           - app: kubescape
             env: staging
@@ -18,7 +22,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: https://github.com/your-org/apps-repo
+        repoURL: http://gitea-http.gitea.svc.cluster.local:3000/admin/app-of-apps.git
         targetRevision: main
         path: "apps/{{app}}"
         helm:
