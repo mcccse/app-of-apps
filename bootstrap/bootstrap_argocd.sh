@@ -4,20 +4,20 @@ set -euo pipefail
 # ── Konfiguration ────────────────────────────────────────────
 ARGOCD_VERSION="${ARGOCD_VERSION:-7.7.0}"          # Helm chart-version
 ARGOCD_NAMESPACE="${ARGOCD_NAMESPACE:-argocd}"
-GITEA_NAMESPACE="${GITEA_NAMESPACE:-gitea}"
-GITEA_SECRET="${GITEA_SECRET:-gitea-admin}"
-GITEA_SVC="${GITEA_SVC:-gitea-http.gitea.svc.cluster.local:3000}"
+FORGEJO_NAMESPACE="${FORGEJO_NAMESPACE:-forgejo}"
+FORGEJO_SECRET="${FORGEJO_SECRET:-forgejo-admin}"
+FORGEJO_SVC="${FORGEJO_SVC:-forgejo-http.forgejo.svc.cluster.local:3000}"
 APPS_REPO_NAME="${APPS_REPO_NAME:-app-of-apps}"
 APPS_PATH="${APPS_PATH:-clusters/dev-nbg}"
 # ─────────────────────────────────────────────────────────────
 
 # 1. Hämta Gitea-credentials från klustret
-ADMIN_USER="$(kubectl -n "${GITEA_NAMESPACE}" get secret "${GITEA_SECRET}" \
-  -o jsonpath='{.data.admin-username}' | base64 -d)"
-ADMIN_PASS="$(kubectl -n "${GITEA_NAMESPACE}" get secret "${GITEA_SECRET}" \
-  -o jsonpath='{.data.admin-password}' | base64 -d)"
+ADMIN_USER="$(kubectl -n "${FORGEJO_NAMESPACE}" get secret "${FORGEJO_SECRET}" \
+  -o jsonpath='{.data.username}' | base64 -d)"
+ADMIN_PASS="$(kubectl -n "${FORGEJO_NAMESPACE}" get secret "${FORGEJO_SECRET}" \
+  -o jsonpath='{.data.password}' | base64 -d)"
 
-REPO_URL="http://${GITEA_SVC}/${ADMIN_USER}/${APPS_REPO_NAME}.git"
+REPO_URL="http://${FORGEJO_SVC}/${ADMIN_USER}/${APPS_REPO_NAME}.git"
 
 # 2. Installera Argo CD via Helm
 helm repo add argo https://argoproj.github.io/argo-helm
@@ -35,7 +35,7 @@ kubectl -n "${ARGOCD_NAMESPACE}" apply -f - <<EOF
 apiVersion: v1
 kind: Secret
 metadata:
-  name: gitea-app-of-apps-repo
+  name: forgejo-app-of-apps-repo
   labels:
     argocd.argoproj.io/secret-type: repository
 type: Opaque
