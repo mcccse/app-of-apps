@@ -1,0 +1,8 @@
+# Standardvärden för Local Path Provisioner — gäller alla miljöer.
+# Överskrivs av values-<env>.yaml per kluster vid behov.
+local-path-provisioner:
+  image: rancher/local-path-provisioner:v0.0.35
+  storageClassName: local-path
+  nodePath: /var/local-path-provisioner
+  setDefaultStorageClass: false
+  debug: true
