@@ -54,7 +54,7 @@ helm upgrade --install "${RELEASE}" oci://code.forgejo.org/forgejo-helm/forgejo 
   --namespace "${NS}" \
   --create-namespace \
   -f - <<VALUES
-forgejo:
+gitea:
   admin:
     username: "${ADMIN_USER}"
     password: "${ADMIN_PASS}"
