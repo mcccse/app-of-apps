@@ -17,6 +17,8 @@ spec:
             env: dev
           - app: kubescape
             env: dev
+          - app: local-path-provisioner
+            env: dev
   template:
     metadata:
       name: "{{app}}"
