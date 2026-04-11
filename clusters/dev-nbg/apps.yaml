@@ -13,8 +13,8 @@ spec:
             env: dev
           - app: reloader
             env: dev
-  #          - app: renovate
-  #            env: dev
+          - app: renovate
+            env: dev
   template:
     metadata:
       name: "{{app}}"
