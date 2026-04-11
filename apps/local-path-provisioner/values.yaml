@@ -1,0 +1,3 @@
+# Standardvärden för Local Path Provisioner — gäller alla miljöer.
+# Överskrivs av values-<env>.yaml per kluster vid behov.
+local-path-provisioner: {}

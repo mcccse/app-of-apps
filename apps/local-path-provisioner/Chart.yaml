@@ -1,0 +1,9 @@
+apiVersion: v2
+name: local-path-provisioner
+description: Rancher Local Path Provisioner (umbrella chart)
+type: application
+version: 0.1.0
+dependencies:
+  - name: local-path-provisioner
+    version: "*"   # renovate: datasource=helm registryUrl=https://charts.rancher.io
+    repository: https://charts.rancher.io

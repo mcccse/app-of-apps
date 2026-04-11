@@ -1,0 +1,2 @@
+# Dev-specifika värden (överskriv standard här om nödvändigt)
+local-path-provisioner: {}
