@@ -13,8 +13,8 @@ spec:
             env: dev
           - app: reloader
             env: dev
-#          - app: renovate
-#            env: dev
+  #          - app: renovate
+  #            env: dev
   template:
     metadata:
       name: "{{app}}"
@@ -22,7 +22,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: http://forgejo-http.forgejo.svc.cluster.local:3000/admin/app-of-apps.git
+        repoURL: http://gitea-http.gitea.svc.cluster.local:3000/admin/app-of-apps.git
         targetRevision: main
         path: "apps/{{app}}"
         helm:
