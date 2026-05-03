@@ -1,0 +1,13 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: pg
+spec:
+  instances: 1
+  storage:
+    pvcTemplate:
+      storageClassName: local-path
+      accessModes: [ReadWriteOnce]
+      resources:
+        requests:
+          storage: 10Gi
