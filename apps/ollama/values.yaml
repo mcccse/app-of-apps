@@ -1,0 +1,43 @@
+deployment:
+  name: ollama
+  replicas: 1
+  resources:
+    requests:
+      memory: "2Gi"
+      cpu: "1000m"
+    limits:
+      memory: "4Gi"
+      cpu: "2000m"
+  volumeMount:
+    name: ollama-data
+    mountPath: /root/.ollama
+
+image:
+  repository: ollama/ollama
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  name: ollama-service
+  type: ClusterIP
+  port: 11434
+  targetPort: 11434
+
+pvc:
+  enabled: true
+  name: ollama-pvc
+  storageClassName: local-path
+  accessModes:
+    - ReadWriteOnce
+  size: 10Gi
+
+job:
+  enabled: true
+  name: ollama-pull-model
+  image:
+    repository: curlimages/curl
+    tag: latest
+    pullPolicy: IfNotPresent
+  model:
+    name: "llama3.2:3b"
+  extraSleepSeconds: 10
