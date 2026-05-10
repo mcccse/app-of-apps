@@ -19,8 +19,8 @@ spec:
             env: dev
           - app: local-path-provisioner
             env: dev
-          - app: ollama
-            env: dev
+  #          - app: ollama
+  #            env: dev
   template:
     metadata:
       name: "{{app}}"
