@@ -1,0 +1,20 @@
+{{- if .Values.job.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Values.job.name }}
+spec:
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: pull-model
+          image: "{{ .Values.job.image.repository }}:{{ .Values.job.image.tag }}"
+          imagePullPolicy: {{ .Values.job.image.pullPolicy }}
+          command:
+            - sh
+            - -c
+            - |
+              sleep {{ .Values.job.extraSleepSeconds }}
+              curl http://{{ .Values.service.name }}:{{ .Values.service.port }}/api/pull -d '{"name": "{{ .Values.job.model.name }}"}'
+{{- end }}
