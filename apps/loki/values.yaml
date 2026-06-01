@@ -26,7 +26,7 @@ loki:
     shared_store: filesystem
     retention_enabled: true
   limits_config:
-    retention_period: 168h   # 7d
+    retention_period: 168h # 7d
 
 persistence:
   enabled: true
@@ -35,3 +35,5 @@ persistence:
 
 service:
   type: ClusterIP
+
+deploymentMode: SingleBinary
