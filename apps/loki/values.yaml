@@ -1,0 +1,37 @@
+# Minimal single-binary Loki with local persistence and 7d retention
+loki:
+  auth_enabled: false
+  server:
+    http_listen_port: 3100
+  common:
+    path_prefix: /var/loki
+  storage_config:
+    boltdb_shipper:
+      active_index_directory: /var/loki/index
+      cache_location: /var/loki/boltdb-cache
+      shared_store: filesystem
+    filesystem:
+      directory: /var/loki/chunks
+  schema_config:
+    configs:
+      - from: 2020-10-15
+        store: boltdb-shipper
+        object_store: filesystem
+        schema: v11
+        index:
+          prefix: index_
+          period: 24h
+  compactor:
+    working_directory: /var/loki/compactor
+    shared_store: filesystem
+    retention_enabled: true
+  limits_config:
+    retention_period: 168h   # 7d
+
+persistence:
+  enabled: true
+  size: 10Gi
+  storageClassName: local-path
+
+service:
+  type: ClusterIP
