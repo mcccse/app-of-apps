@@ -2,6 +2,16 @@
 loki:
   deploymentMode: SingleBinary
 
+  storage:
+    type: filesystem
+    bucketNames:
+      chunks: chunks
+      ruler: ruler
+      admin: admin
+    filesystem:
+      chunksDirectory: /var/loki/chunks
+      rulesDirectory: /var/loki/rules
+
   loki:
     auth_enabled: false
     server:
