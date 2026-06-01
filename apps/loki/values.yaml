@@ -12,7 +12,7 @@ loki:
       chunksDirectory: /var/loki/chunks
       rulesDirectory: /var/loki/rules
 
-  loki:
+  config:
     auth_enabled: false
     server:
       http_listen_port: 3100
