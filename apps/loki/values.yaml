@@ -5,14 +5,14 @@ loki:
   storage:
     type: filesystem
     bucketNames:
-      chunks: chunks
-      ruler: ruler
-      admin: admin
+      chunks: "chunks"
+      ruler: "ruler"
+      admin: "admin"
     filesystem:
       chunksDirectory: /var/loki/chunks
       rulesDirectory: /var/loki/rules
 
-  config:
+  structuredConfig:
     auth_enabled: false
     server:
       http_listen_port: 3100
@@ -39,7 +39,7 @@ loki:
       shared_store: filesystem
       retention_enabled: true
     limits_config:
-      retention_period: 168h   # 7d
+      retention_period: 168h # 7d
 
   singleBinary:
     persistence:
