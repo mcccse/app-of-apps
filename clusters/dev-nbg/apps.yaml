@@ -19,7 +19,13 @@ spec:
             env: dev
           - app: local-path-provisioner
             env: dev
-          - app: ollama
+          #          - app: ollama
+          #            env: dev
+          - app: grafana
+            env: dev
+          - app: loki
+            env: dev
+          - app: promtail
             env: dev
   template:
     metadata:
