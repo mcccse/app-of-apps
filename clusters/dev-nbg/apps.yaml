@@ -31,6 +31,8 @@ spec:
             env: dev
           - app: tempo
             env: dev
+          - app: otel-collector
+            env: dev
   template:
     metadata:
       name: "{{app}}"
