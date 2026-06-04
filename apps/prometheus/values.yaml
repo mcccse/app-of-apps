@@ -6,7 +6,7 @@ kube-prometheus-stack:
     admissionWebhooks:
       enabled: true
       certManager:
-        enabled: true
-      patch:
         enabled: false
+      patch:
+        enabled: true
       failurePolicy: Ignore
