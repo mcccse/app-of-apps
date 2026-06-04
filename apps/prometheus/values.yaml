@@ -2,3 +2,9 @@
 kube-prometheus-stack:
   grafana:
     enabled: false
+  prometheusOperator:
+    admissionWebhooks:
+      enabled: true
+      patch:
+        enabled: true
+      failurePolicy: Ignore
