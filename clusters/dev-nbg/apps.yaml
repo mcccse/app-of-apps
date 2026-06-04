@@ -19,8 +19,20 @@ spec:
             env: dev
           - app: local-path-provisioner
             env: dev
-  #          - app: ollama
-  #            env: dev
+          #          - app: ollama
+          #            env: dev
+          - app: grafana
+            env: dev
+          - app: loki
+            env: dev
+          - app: promtail
+            env: dev
+          - app: prometheus
+            env: dev
+          - app: tempo
+            env: dev
+          - app: otel-collector
+            env: dev
   template:
     metadata:
       name: "{{app}}"
@@ -44,3 +56,4 @@ spec:
           selfHeal: true
         syncOptions:
           - CreateNamespace=true
+          - ServerSideApply=true

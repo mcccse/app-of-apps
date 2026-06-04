@@ -1,0 +1,9 @@
+apiVersion: v2
+name: promtail
+description: Grafana Promtail (umbrella chart)
+type: application
+version: 0.1.0
+dependencies:
+  - name: promtail
+    version: "*"   # renovate: datasource=helm registryUrl=https://grafana.github.io/helm-charts
+    repository: https://grafana.github.io/helm-charts

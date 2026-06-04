@@ -1,0 +1,9 @@
+apiVersion: v2
+name: loki
+description: Grafana Loki (umbrella chart)
+type: application
+version: 0.1.0
+dependencies:
+  - name: loki
+    version: "*" # renovate: datasource=helm registryUrl=https://grafana-community.github.io/helm-charts
+    repository: https://grafana-community.github.io/helm-charts

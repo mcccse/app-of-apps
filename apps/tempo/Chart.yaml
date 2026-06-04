@@ -1,0 +1,9 @@
+apiVersion: v2
+name: tempo
+description: Grafana Tempo (umbrella chart)
+type: application
+version: 0.1.0
+dependencies:
+  - name: tempo
+    version: "*"   # renovate: datasource=helm registryUrl=https://grafana.github.io/helm-charts
+    repository: https://grafana.github.io/helm-charts

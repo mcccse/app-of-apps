@@ -1,0 +1,12 @@
+# Minimal overrides: disable embedded Grafana, we deploy Grafana separately.
+kube-prometheus-stack:
+  grafana:
+    enabled: false
+  prometheusOperator:
+    admissionWebhooks:
+      enabled: true
+      certManager:
+        enabled: false
+      patch:
+        enabled: true
+      failurePolicy: Ignore

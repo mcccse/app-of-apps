@@ -1,0 +1,9 @@
+apiVersion: v2
+name: otel-collector
+description: OpenTelemetry Collector (umbrella chart)
+type: application
+version: 0.1.0
+dependencies:
+  - name: opentelemetry-collector
+    version: "*"   # renovate: datasource=helm registryUrl=https://open-telemetry.github.io/opentelemetry-helm-charts
+    repository: https://open-telemetry.github.io/opentelemetry-helm-charts

@@ -1,9 +1,10 @@
 # Dev environment overrides for ollama (optional)
 deployment:
+  replicas: 1
   resources:
     requests:
       memory: "12Gi"
       cpu: "10000m"
     limits:
       memory: "24Gi"
-      cpu: "14000m"
+      cpu: "8000m"

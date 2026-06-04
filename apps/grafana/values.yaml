@@ -1,0 +1,76 @@
+grafana:
+  service:
+    type: ClusterIP
+
+  # Use a Secret named grafana-admin with keys admin-user, admin-password
+  admin:
+    existingSecret: grafana-admin
+    userKey: admin-user
+    passwordKey: admin-password
+
+  # Auto-provision Loki datasource
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+        - name: Loki
+          type: loki
+          access: proxy
+          url: http://loki.loki.svc.cluster.local:3100
+          isDefault: true
+          jsonData:
+            maxLines: 1000
+        - name: Prometheus
+          type: prometheus
+          access: proxy
+          url: http://prometheus-kube-prometheus-prometheus.prometheus.svc.cluster.local:9090
+          isDefault: false
+        - name: Tempo
+          type: tempo
+          access: proxy
+          url: http://tempo.tempo.svc.cluster.local:3200
+          isDefault: false
+
+  sidecar:
+    dashboards:
+      enabled: true
+
+  dashboardProviders:
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+        - name: default
+          orgId: 1
+          folder: ""
+          type: file
+          disableDeletion: false
+          editable: true
+          options:
+            path: /var/lib/grafana/dashboards/default
+
+  dashboards:
+    default:
+      loki-default:
+        json: |
+          {
+            "title": "Loki Default",
+            "uid": "loki-default",
+            "schemaVersion": 38,
+            "version": 1,
+            "time": { "from": "now-1h", "to": "now" },
+            "panels": [
+              {
+                "type": "logs",
+                "title": "Recent logs",
+                "gridPos": { "h": 12, "w": 24, "x": 0, "y": 0 },
+                "datasource": "Loki",
+                "targets": [
+                  { "expr": "{job=~\".+\"}", "refId": "A" }
+                ]
+              }
+            ]
+          }
+
+  grafana.ini:
+    dashboards:
+      default_home_dashboard_path: /var/lib/grafana/dashboards/default/loki-default.json
