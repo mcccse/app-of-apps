@@ -27,6 +27,8 @@ spec:
             env: dev
           - app: promtail
             env: dev
+          - app: prometheus
+            env: dev
   template:
     metadata:
       name: "{{app}}"
