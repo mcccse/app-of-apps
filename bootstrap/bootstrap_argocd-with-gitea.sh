@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # ── Konfiguration ────────────────────────────────────────────
-ARGOCD_VERSION="${ARGOCD_VERSION:-7.7.0}"          # Helm chart-version
+ARGOCD_VERSION="${ARGOCD_VERSION:-9.5.18}" # Helm chart-version
 ARGOCD_NAMESPACE="${ARGOCD_NAMESPACE:-argocd}"
 GITEA_NAMESPACE="${GITEA_NAMESPACE:-gitea}"
 GITEA_SECRET="${GITEA_SECRET:-gitea-admin}"
