@@ -1,12 +1,12 @@
 # Minimal OpenTelemetry Collector to receive OTLP and forward to Tempo
 opentelemetry-collector:
   mode: deployment
-  config: |
+  config:
     receivers:
       otlp:
         protocols:
-          grpc:
-          http:
+          grpc: {}
+          http: {}
     processors:
       batch: {}
     exporters:
@@ -17,6 +17,9 @@ opentelemetry-collector:
     service:
       pipelines:
         traces:
-          receivers: [otlp]
-          processors: [batch]
-          exporters: [otlp]
+          receivers:
+            - otlp
+          processors:
+            - batch
+          exporters:
+            - otlp
