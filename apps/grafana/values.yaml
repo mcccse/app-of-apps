@@ -20,6 +20,11 @@ grafana:
           isDefault: true
           jsonData:
             maxLines: 1000
+        - name: Prometheus
+          type: prometheus
+          access: proxy
+          url: http://prometheus-kube-prometheus-prometheus.prometheus.svc.cluster.local:9090
+          isDefault: false
 
   sidecar:
     dashboards:
