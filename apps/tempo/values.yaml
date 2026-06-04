@@ -1,9 +1,14 @@
 # Monolithic Tempo with local persistence (dev-friendly defaults)
 tempo:
-  # Runtime configuration for Tempo (monolithic). Enables common receivers and local storage.
+  # Runtime configuration for Tempo (monolithic) with metrics-generator and memberlist rings.
   config: |
     server:
       http_listen_port: 3200
+
+    memberlist:
+      join_members:
+        - tempo-memberlist
+
     distributor:
       receivers:
         otlp:
@@ -18,14 +23,43 @@ tempo:
             thrift_compact: {}
         zipkin: {}
         opencensus: {}
+
+    ingester:
+      lifecycler:
+        ring:
+          kvstore:
+            store: memberlist
+          replication_factor: 1
+
+    metrics_generator:
+      ring:
+        kvstore:
+          store: memberlist
+      registry:
+        external_labels:
+          source: tempo
+      storage:
+        path: /var/tempo/metrics-generator
+      processors:
+        service_graphs:
+          enabled: true
+        span_metrics:
+          enabled: true
+
     storage:
       trace:
         backend: local
         local:
           path: /var/tempo
+
     compactor:
       compaction:
         block_retention: 168h
+
+  metricsGenerator:
+    enabled: true
+    remoteWrite:
+      enabled: false
 
   # Persist local storage to a PVC
   persistence:
