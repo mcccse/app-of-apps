@@ -1,0 +1,22 @@
+# Minimal OpenTelemetry Collector to receive OTLP and forward to Tempo
+opentelemetry-collector:
+  mode: deployment
+  config: |
+    receivers:
+      otlp:
+        protocols:
+          grpc:
+          http:
+    processors:
+      batch: {}
+    exporters:
+      otlp:
+        endpoint: tempo.tempo.svc.cluster.local:4317
+        tls:
+          insecure: true
+    service:
+      pipelines:
+        traces:
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [otlp]
