@@ -29,6 +29,8 @@ spec:
             env: dev
           - app: prometheus
             env: dev
+          - app: tempo
+            env: dev
   template:
     metadata:
       name: "{{app}}"
