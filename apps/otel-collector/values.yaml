@@ -1,5 +1,7 @@
 # Minimal OpenTelemetry Collector to receive OTLP and forward to Tempo
 opentelemetry-collector:
+  image:
+    repository: "otel/opentelemetry-collector-k8s"
   mode: deployment
   config:
     receivers:
