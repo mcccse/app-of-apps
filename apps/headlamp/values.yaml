@@ -4,7 +4,7 @@ headlamp:
 
   initContainers:
     - name: kubescape-plugin
-      image: quay.io/kubescape/headlamp-plugin:v0.10.6
+      image: quay.io/kubescape/headlamp-plugin:v0.11.2
       command:
         - /bin/sh
         - -c
