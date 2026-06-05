@@ -2,6 +2,7 @@
 kube-prometheus-stack:
   grafana:
     enabled: false
+
   prometheusOperator:
     admissionWebhooks:
       enabled: true
@@ -10,3 +11,23 @@ kube-prometheus-stack:
       patch:
         enabled: true
       failurePolicy: Ignore
+
+  prometheus:
+    prometheusSpec:
+      resources:
+        requests:
+          memory: 512Mi
+          cpu: 100m
+        limits:
+          memory: 2Gi
+          cpu: 1000m
+      storageSpec:
+        volumeClaimTemplate:
+          spec:
+            storageClassName: local-path
+            accessModes: ["ReadWriteOnce"]
+            resources:
+              requests:
+                storage: 20Gi
+      retention: 10d
+      walCompression: true
