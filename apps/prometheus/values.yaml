@@ -36,6 +36,4 @@ kube-prometheus-stack:
         runAsGroup: 2000
         fsGroup: 2000
         runAsNonRoot: true
-        seccompProfile:
-          type: RuntimeDefault
         fsGroupChangePolicy: OnRootMismatch
