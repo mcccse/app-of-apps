@@ -1,0 +1,38 @@
+# apps/victoriametrics/values.yaml
+victoria-metrics-k8s-stack:
+  grafana:
+    enabled: false
+
+  vmsingle:
+    enabled: true
+    spec:
+      retentionPeriod: "10d"
+      storage:
+        storageClassName: local-path
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 20Gi
+      resources:
+        requests:
+          memory: 512Mi
+          cpu: 100m
+        limits:
+          memory: 2Gi
+          cpu: 1000m
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+        runAsNonRoot: true
+
+  alertmanager:
+    enabled: true
+
+  vmalert:
+    enabled: true
+
+  vmagent:
+    enabled: true
+    spec:
+      scrapeInterval: 30s

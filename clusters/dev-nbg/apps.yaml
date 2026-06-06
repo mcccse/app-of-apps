@@ -27,7 +27,7 @@ spec:
             env: dev
           - app: promtail
             env: dev
-          - app: prometheus
+          - app: victoriametrics
             env: dev
           - app: tempo
             env: dev
