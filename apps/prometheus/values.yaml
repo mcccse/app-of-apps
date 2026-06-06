@@ -14,6 +14,10 @@ kube-prometheus-stack:
 
   prometheus:
     prometheusSpec:
+      image:
+        registry: docker.io
+        repository: prom/prometheus
+        tag: v2.53.4
       resources:
         requests:
           memory: 512Mi
