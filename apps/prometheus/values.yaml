@@ -14,6 +14,13 @@ kube-prometheus-stack:
 
   prometheus:
     prometheusSpec:
+      containers:
+        - name: prometheus
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: []
+            readOnlyRootFilesystem: false
       additionalArgs:
         - name: query.max-concurrency
           value: "0"
