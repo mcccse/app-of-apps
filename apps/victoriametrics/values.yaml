@@ -7,6 +7,7 @@ victoria-metrics-k8s-stack:
     enabled: true
     spec:
       retentionPeriod: "10d"
+      extraArgs: {}
       storage:
         storageClassName: local-path
         accessModes: ["ReadWriteOnce"]
@@ -24,6 +25,7 @@ victoria-metrics-k8s-stack:
   vmagent:
     enabled: true
     spec:
+      extraArgs: {}
       scrapeInterval: 30s
       resources:
         requests:
