@@ -14,7 +14,9 @@ kube-prometheus-stack:
 
   prometheus:
     prometheusSpec:
-      queryLogFile: ""
+      additionalArgs:
+        - name: query.max-concurrency
+          value: "0"
       resources:
         requests:
           memory: 512Mi
@@ -38,3 +40,5 @@ kube-prometheus-stack:
         fsGroup: 2000
         runAsNonRoot: true
         fsGroupChangePolicy: OnRootMismatch
+        seccompProfile:
+          type: Unconfined
