@@ -7,7 +7,9 @@ victoria-metrics-k8s-stack:
     enabled: true
     spec:
       retentionPeriod: "10d"
-      extraArgs: {}
+      extraArgs:
+        memory.allowedPercent: "60"
+        fs.disableMmap: "true"
       storage:
         storageClassName: local-path
         accessModes: ["ReadWriteOnce"]
@@ -25,7 +27,10 @@ victoria-metrics-k8s-stack:
   vmagent:
     enabled: true
     spec:
-      extraArgs: {}
+      extraArgs:
+        promscrape.streamParse: "true"
+        promscrape.maxScrapeSize: "16MB"
+        memory.allowedPercent: "50"
       scrapeInterval: 30s
       resources:
         requests:
@@ -43,9 +48,23 @@ victoria-metrics-k8s-stack:
 
   prometheus-node-exporter:
     enabled: true
+    resources:
+      requests:
+        cpu: 25m
+        memory: 40Mi
+      limits:
+        cpu: 100m
+        memory: 100Mi
 
   kube-state-metrics:
     enabled: true
+    resources:
+      requests:
+        cpu: 50m
+        memory: 100Mi
+      limits:
+        cpu: 200m
+        memory: 250Mi
 
   # Disable things we don't need
   victoria-metrics-operator:
