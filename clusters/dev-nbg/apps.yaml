@@ -28,9 +28,9 @@ spec:
             env: dev
           - app: promtail
             env: dev
-          #          - app: victoriametrics
-          #            env: dev
-          #            releaseName: vm
+          - app: victoriametrics
+            env: dev
+            releaseName: vm
           - app: tempo
             env: dev
           - app: otel-collector
