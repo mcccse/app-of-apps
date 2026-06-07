@@ -3,12 +3,13 @@ opentelemetry-collector:
   image:
     repository: "otel/opentelemetry-collector-k8s"
   mode: deployment
-  config:
+  config: |
     receivers:
       otlp:
         protocols:
-          grpc: {}
-          http: {}
+          grpc:
+          http:
+      zipkin: {}
     processors:
       batch: {}
     exporters:
@@ -19,9 +20,6 @@ opentelemetry-collector:
     service:
       pipelines:
         traces:
-          receivers:
-            - otlp
-          processors:
-            - batch
-          exporters:
-            - otlp
+          receivers: [otlp, zipkin]
+          processors: [batch]
+          exporters: [otlp]
