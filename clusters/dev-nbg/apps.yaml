@@ -4,6 +4,7 @@ metadata:
   name: dev-nbg-apps
   namespace: argocd
 spec:
+  goTemplate: true
   generators:
     - list:
         elements:
@@ -19,37 +20,39 @@ spec:
             env: dev
           - app: local-path-provisioner
             env: dev
-          #          - app: ollama
-          #            env: dev
+          # - app: ollama
+          #   env: dev
           - app: grafana
             env: dev
           - app: loki
             env: dev
           - app: promtail
             env: dev
-          - app: prometheus
+          - app: victoriametrics
             env: dev
+            releaseName: vm
           - app: tempo
             env: dev
           - app: otel-collector
             env: dev
   template:
     metadata:
-      name: "{{app}}"
+      name: "{{ .app }}"
       namespace: argocd
     spec:
       project: default
       source:
         repoURL: http://gitea-http.gitea.svc.cluster.local:3000/admin/app-of-apps.git
         targetRevision: main
-        path: "apps/{{app}}"
+        path: "apps/{{ .app }}"
         helm:
+          releaseName: "{{ if .releaseName }}{{ .releaseName }}{{ else }}{{ .app }}{{ end }}"
           valueFiles:
             - values.yaml
-            - "values-{{env}}.yaml"
+            - "values-{{ .env }}.yaml"
       destination:
         server: https://kubernetes.default.svc
-        namespace: "{{app}}"
+        namespace: "{{ .app }}"
       syncPolicy:
         automated:
           prune: true
