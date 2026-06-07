@@ -23,7 +23,7 @@ grafana:
         - name: VictoriaMetrics
           type: prometheus
           access: proxy
-          url: http://victoriametrics-victoria-metrics-k8s-stack-vmsingle.victoriametrics.svc:8428
+          url: http://vmsingle-vm-victoria-metrics-k8s-stack.victoriametrics.svc:8428
           isDefault: true
         - name: Tempo
           type: tempo
