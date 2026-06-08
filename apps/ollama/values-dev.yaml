@@ -3,8 +3,8 @@ deployment:
   replicas: 1
   resources:
     requests:
-      memory: "12Gi"
+      memory: "8Gi"
       cpu: "10000m"
     limits:
-      memory: "24Gi"
+      memory: "12Gi"
       cpu: "8000m"
