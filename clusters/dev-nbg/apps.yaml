@@ -20,8 +20,8 @@ spec:
             env: dev
           - app: local-path-provisioner
             env: dev
-          # - app: ollama
-          #   env: dev
+          - app: ollama
+            env: dev
           - app: grafana
             env: dev
           - app: loki
