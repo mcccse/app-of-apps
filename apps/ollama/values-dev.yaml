@@ -4,7 +4,7 @@ deployment:
   resources:
     requests:
       memory: "8Gi"
-      cpu: "10000m"
+      cpu: "8000m"
     limits:
       memory: "12Gi"
-      cpu: "8000m"
+      cpu: "6000m"
