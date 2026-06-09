@@ -51,11 +51,11 @@ Committa och pusha — Argo CD synkar automatiskt.
 
 ## Miljöer
 
-| Miljö     | Kluster       | Syfte                          |
-|-----------|---------------|--------------------------------|
+| Miljö     | Kluster       | Syfte                            |
+|-----------|---------------|--------------------------------  |
 | dev       | dev-nbg       | Utveckling, testar nya versioner |
-| staging   | staging-fsn   | UAT, verifiering innan prod    |
-| prod      | prod-ams      | Produktion                     |
+| staging   | staging-fsn   | UAT, verifiering innan prod      |
+| prod      | prod-ams      | Produktion                       |
 
 ## Versionshantering med Renovate
 
@@ -63,3 +63,16 @@ Renovate skannar `Chart.yaml`-filer och öppnar automatiskt PRs när nya
 Helm chart-versioner finns tillgängliga. Se `renovate.json` för konfiguration.
 
 Kontrollera alltid att en ny version fungerar i dev/staging innan du mergar till prod.
+
+## Manuall steps
+
+Apps are installed using `helm`, here are examples to do it manually.
+
+```bash
+helm template apps/ollama --namespace ollama \
+  -f apps/ollama/values.yaml -f apps/ollama/values-dev.yaml
+helm upgrade --install ollama apps/ollama \
+  --namespace ollama \
+  --create-namespace \
+  -f apps/ollama/values.yaml -f apps/ollama/values-dev.yaml
+```
