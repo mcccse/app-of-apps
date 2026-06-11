@@ -11,4 +11,4 @@ scripts/port-forward.sh &&
   echo "" &&
   echo -n "gitea User: admin, passwd: " &&
   kubectl -n gitea get secret gitea-admin \
-    -o jsonpath="{.data.admin-password}" | base64 -d
+    -o jsonpath="{.data.password}" | base64 -d

@@ -1,0 +1,16 @@
+argocd:
+  namespace: argocd
+
+gitea:
+  namespace: gitea
+  secretName: gitea-admin
+  service: gitea-http.gitea.svc.cluster.local:3000
+
+apps:
+  repoName: app-of-apps
+  path: clusters/dev-nbg
+  targetRevision: HEAD
+
+application:
+  name: app-of-apps
+  project: default

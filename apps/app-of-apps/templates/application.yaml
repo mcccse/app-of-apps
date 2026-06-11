@@ -1,0 +1,30 @@
+{{- $secret := lookup "v1" "Secret" .Values.gitea.namespace .Values.gitea.secretName -}}
+{{- if not $secret }}
+{{- fail (printf "Secret %s/%s hittades inte" .Values.gitea.namespace .Values.gitea.secretName) }}
+{{- end }}
+
+{{- $adminUserB64 := get $secret.data "username" -}}
+{{- if not $adminUserB64 }}
+{{- fail (printf "Secret %s/%s saknar nyckeln username" .Values.gitea.namespace .Values.gitea.secretName) }}
+{{- end }}
+
+{{- $adminUser := $adminUserB64 | b64dec -}}
+{{- $repoURL := printf "http://%s/%s/%s.git" .Values.gitea.service $adminUser .Values.apps.repoName -}}
+
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Values.application.name }}
+  namespace: {{ .Values.argocd.namespace }}
+spec:
+  project: {{ .Values.application.project }}
+  source:
+    repoURL: {{ $repoURL | quote }}
+    targetRevision: {{ .Values.apps.targetRevision | quote }}
+    path: {{ .Values.apps.path | quote }}
+  destination:
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

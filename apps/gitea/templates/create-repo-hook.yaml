@@ -1,0 +1,61 @@
+{{- /*
+Post-install hook: create the 'app-of-apps' repository once.
+If the repository already exists, the Job exits successfully without changes.
+*/ -}}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: gitea-create-app-of-apps
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    "helm.sh/hook": post-install
+    "helm.sh/hook-weight": "10"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  backoffLimit: 6
+  activeDeadlineSeconds: 300
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: create-repo
+          image: curlimages/curl:8.11.1
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: GITEA_BASE
+              value: "http://gitea-http.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.gitea.service.http.port }}"
+            - name: GITEA_ADMIN_USER
+              valueFrom:
+                secretKeyRef:
+                  name: gitea-admin
+                  key: username
+            - name: GITEA_ADMIN_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: gitea-admin
+                  key: password
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              set -euo pipefail
+              i=1
+              until curl -fsS "${GITEA_BASE}/api/healthz" >/dev/null; do
+                if [ "$i" -gt 60 ]; then
+                  echo "Gitea not healthy after waiting" >&2
+                  exit 1
+                fi
+                sleep 2
+                i=$((i+1))
+              done
+              if curl -fsS -u "${GITEA_ADMIN_USER}:${GITEA_ADMIN_PASS}" \
+                   "${GITEA_BASE}/api/v1/repos/${GITEA_ADMIN_USER}/app-of-apps" >/dev/null; then
+                echo "Repository app-of-apps already exists."
+                exit 0
+              fi
+              curl -fsS \
+                -u "${GITEA_ADMIN_USER}:${GITEA_ADMIN_PASS}" \
+                -H "Content-Type: application/json" \
+                -d '{"name":"app-of-apps","private":false}' \
+                -X POST \
+                "${GITEA_BASE}/api/v1/user/repos"
+              echo "Created repository app-of-apps."
