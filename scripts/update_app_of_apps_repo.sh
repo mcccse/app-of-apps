@@ -3,8 +3,8 @@
 BRANCH="$(git rev-parse --abbrev-ref HEAD)" # get current branch
 
 # Get secrets from cluster
-GITEA_PASS="$(kubectl -n gitea get secret gitea-admin -o jsonpath='{.data.admin-password}' | base64 -d)"
-GITEA_USER="$(kubectl -n gitea get secret gitea-admin -o jsonpath='{.data.admin-username}' | base64 -d)"
+GITEA_PASS="$(kubectl -n gitea get secret gitea-admin -o jsonpath='{.data.password}' | base64 -d)"
+GITEA_USER="$(kubectl -n gitea get secret gitea-admin -o jsonpath='{.data.username}' | base64 -d)"
 
 # Make passwd http safe
 GITEA_PASS_ENCODED=$(python3 -c "import urllib.parse, sys; print(urllib.parse.quote(sys.stdin.read().strip(), safe=''))" <<<"${GITEA_PASS}")

@@ -1,0 +1,47 @@
+gitea:
+  gitea:
+    admin:
+      existingSecret: gitea-admin
+      existingSecretUsernameKey: username
+      existingSecretPasswordKey: password
+    config:
+      server:
+        ROOT_URL: "http://gitea-http.gitea.svc.cluster.local:3000/"
+        START_SSH_SERVER: true
+        SSH_DOMAIN: "gitea-ssh.gitea.svc.cluster.local"
+        SSH_PORT: 2222
+      database:
+        DB_TYPE: sqlite3
+        PATH: /data/gitea/gitea.db
+      cache:
+        ADAPTER: memory
+      session:
+        PROVIDER: memory
+      queue:
+        TYPE: channel
+
+  service:
+    http:
+      type: ClusterIP
+      port: 3000
+    ssh:
+      type: ClusterIP
+      port: 2222
+
+  persistence:
+    enabled: true
+    size: 10Gi
+    storageClass: local-path
+
+  postgresql-ha:
+    enabled: false
+  postgresql:
+    enabled: false
+
+  # Disable optional caches/queues (not needed for small installs)
+  valkey:
+    enabled: false
+  valkey-cluster:
+    enabled: false
+  memcached:
+    enabled: false
