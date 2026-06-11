@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Usage: ./install_app.sh apps/gitea [dev|staging|prod]
-if [ $# -lt 1 ] || [ $# -gt 2 ]; then
-  echo "Usage: $0 <chart_dir> [env]"
+# Usage:
+#   ./install_app.sh apps/gitea dev
+#   ./install_app.sh apps/app-of-apps dev argocd
+
+if [ $# -lt 1 ] || [ $# -gt 3 ]; then
+  echo "Usage: $0 <chart_dir> [env] [namespace]"
   echo "Example: $0 apps/gitea dev"
+  echo "Example: $0 apps/app-of-apps dev argocd"
   exit 1
 fi
 
@@ -12,7 +16,7 @@ CHART_DIR="${1%/}"
 ENV="${2:-dev}"
 
 RELEASE="$(basename "$CHART_DIR")"
-NAMESPACE="$RELEASE"
+NAMESPACE="${3:-$RELEASE}"
 
 BASE_VALUES="$CHART_DIR/values.yaml"
 ENV_VALUES="$CHART_DIR/values-$ENV.yaml"
