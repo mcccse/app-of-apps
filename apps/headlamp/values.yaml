@@ -1,7 +1,17 @@
 headlamp:
   config:
     pluginsDir: /build/plugins
-
+  podSecurityContext:
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
+  securityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop: ["ALL"]
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
   initContainers:
     - name: kubescape-plugin
       image: quay.io/kubescape/headlamp-plugin:v0.11.2
@@ -9,30 +19,39 @@ headlamp:
         - /bin/sh
         - -c
         - mkdir -p /build/plugins && cp -r /plugins/* /build/plugins/
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop: ["ALL"]
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
       volumeMounts:
         - name: headlamp-plugins
           mountPath: /build/plugins
-
     - name: trivy-plugin
       image: ghcr.io/kubebeam/trivy-headlamp-plugin:v0.3.2
       command:
         - /bin/sh
         - -c
         - mkdir -p /build/plugins && cp -r /plugins/* /build/plugins/
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop: ["ALL"]
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
       volumeMounts:
         - name: headlamp-plugins
           mountPath: /build/plugins
-
   volumeMounts:
     - name: headlamp-plugins
       mountPath: /build/plugins
-
   volumes:
     - name: headlamp-plugins
       emptyDir: {}
-
   ingress:
     enabled: false
-
   service:
     type: ClusterIP
